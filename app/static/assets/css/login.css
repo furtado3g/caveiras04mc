@@ -4,31 +4,10 @@ body{
     margin: 0;
     padding: 0;
     border: 0;
-    background: #ccc;
+    background: url(/static/assets/images/bg-login.jpg) no-repeat center center fixed;
     color: #333;
     font-family: "Inter", sans-serif;
     font-size: 14px;
     font-weight: 400;
     line-height: 1.6;
-}
-
-.container{
-    width: 100vw;
-    height: 100vh;
-    display: grid;
-    grid-template-columns: 2fr 1fr;
-}
-
-@media screen and (device-width: 700px){
-    .container{
-        grid-template-columns: 1fr;
-    }
-}
-
-@media screen and (prefers-color-scheme: dark) {
-    body{
-        background: #323669;
-        color: #00e235;
-    }
-
 }
