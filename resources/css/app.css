@@ -1,0 +1,16 @@
+@import "tailwindcss";
+
+:root {
+    --color-primary: #D4AF37;
+    --color-primary-dark: #B8960C;
+    --color-bg-dark: #1a1a2e;
+    --color-bg-darker: #16213e;
+}
+
+body {
+    @apply bg-gray-950 text-gray-100;
+}
+
+.input {
+    @apply w-full rounded-lg border border-gray-700 bg-gray-800 px-4 py-2 text-white placeholder-gray-500 focus:border-yellow-500 focus:outline-none;
+}

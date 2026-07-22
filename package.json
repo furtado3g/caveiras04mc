@@ -1,0 +1,32 @@
+{
+    "$schema": "https://www.schemastore.org/package.json",
+    "private": true,
+    "type": "module",
+    "scripts": {
+        "build": "vite build",
+        "dev": "vite",
+        "dev:all": "concurrently -n \"vite,queue,serve\" -c \"yellow,green,blue\" \"npm run dev\" \"php artisan queue:work --tries=1\" \"php artisan serve --port=8000\""
+    },
+    "devDependencies": {
+        "@headlessui/react": "^2.0.0",
+        "@inertiajs/react": "^2.0.0",
+        "@tailwindcss/vite": "^4.3.2",
+        "@vitejs/plugin-react": "^4.2.0",
+        "concurrently": "^9.2.3",
+        "laravel-vite-plugin": "^3.1",
+        "react": "^18.2.0",
+        "react-dom": "^18.2.0",
+        "vite": "^8.0.0"
+    },
+    "dependencies": {
+        "@inertiajs/react": "^3.6.1",
+        "@vitejs/plugin-react": "^6.0.3",
+        "axios": "^1.18.1",
+        "clsx": "^2.1.1",
+        "lucide-react": "^1.23.0",
+        "react": "^19.2.7",
+        "react-dom": "^19.2.7",
+        "tailwind-merge": "^3.6.0",
+        "tailwindcss": "^4.3.2"
+    }
+}
