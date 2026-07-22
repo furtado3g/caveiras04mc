@@ -1,58 +1,160 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Caveira's MC Brasil - Sistema de Gestão de Motoclube
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Sistema web completo para gestão de membros de um motoclube, desenvolvido com as melhores práticas e tecnologias modernas.
 
-## About Laravel
+## Funcionalidades
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- **Gestão de Membros** - Cadastro completo (dados pessoais, contato, documento)
+- **RBAC** - 4 perfis: Admin, Diretoria, Membro, Secretaria/Financeiro
+- **Módulo de Veículos** - Múltiplas motos por membro com alertas de vencimento
+- **Dados de Saúde** - Acesso restrito (membro + diretoria autorizada)
+- **Documentos** - Upload CNH, comprovante, controle de validade
+- **Financeiro** - Controle de mensalidade + histórico de pagamentos
+- **Imagem de Aniversário** - Geração automática via Intervention Image
+- **Dashboard** - Estatísticas, alertas, aniversariantes do dia
+- **PWA** - App instalável em dispositivos móveis
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Stack Tecnológica
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+| Camada | Tecnologia |
+|--------|------------|
+| Backend | Laravel 13, PHP 8.4 |
+| Frontend | Inertia.js + React 18 |
+| UI | Tailwind CSS v4 |
+| Banco (dev) | SQLite |
+| Banco (prod) | MySQL |
+| Image Gen | Intervention Image |
+| Auth | Laravel Breeze (sessão) |
+| Queue | Database (compatível com Kafka) |
 
-## Learning Laravel
+## Pré-requisitos
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+- PHP 8.4+ (com extensões: pdo_sqlite, gd, mbstring, xml)
+- Composer
+- Node.js 18+ e npm
+- SQLite (dev) ou MySQL (prod)
 
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
-
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
-
-## Agentic Development
-
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
+## Instalação
 
 ```bash
-composer require laravel/boost --dev
+# Clone o repositório
+git clone https://github.com/furtado3g/Caveiras04MC.git
+cd Caveiras04MC/app
 
-php artisan boost:install
+# Instale as dependências PHP
+composer install
+
+# Instale as dependências Node.js
+npm install
+
+# Copie o arquivo de ambiente
+cp .env.example .env
+
+# Gere a chave da aplicação
+php artisan key:generate
+
+# Execute as migrations e seed
+php artisan migrate:fresh --seed
+
+# Crie o link simbólico de storage
+php artisan storage:link
+
+# Build dos assets (produção)
+npm run build
 ```
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+## Executando o Projeto
 
-## Contributing
+### Opção 1: Tudo em um terminal (recomendado)
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+```bash
+npm run dev:all
+```
 
-## Code of Conduct
+Isso inicia:
+- **Vite** (porta 5173) - servidor de assets
+- **Queue Worker** - processamento de filas
+- **Laravel** (porta 8000) - servidor PHP
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+### Opção 2: Terminais separados
 
-## Security Vulnerabilities
+```bash
+# Terminal 1 - Vite
+npm run dev
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+# Terminal 2 - Laravel
+php artisan serve
 
-## License
+# Terminal 3 - Queue Worker
+php artisan queue:work
+```
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+## Acesso
+
+- **URL:** http://localhost:8000
+- **Admin:** admin@caveiras.com.br / password
+- **Diretor:** diretor@caveiras.com.br / password
+
+## Estrutura do Projeto
+
+```
+app/
+├── Http/
+│   ├── Controllers/     # Controllers (Auth, Member, Vehicle, etc.)
+│   ├── Middleware/       # Middleware (RBAC, Inertia)
+│   └── Requests/        # Form Requests
+├── Jobs/                # Jobs assíncronos
+├── Models/              # Models Eloquent
+└── Providers/
+
+resources/
+├── js/
+│   ├── Components/      # Componentes React reutilizáveis
+│   ├── Layouts/         # Layouts (Authenticated, Guest)
+│   └── Pages/           # Páginas Inertia
+│       ├── Auth/        # Login, Register, etc.
+│       ├── Members/     # CRUD de membros
+│       ├── Birthday/    # Geração de imagens
+│       └── Dashboard.jsx
+└── css/
+```
+
+## Testes
+
+```bash
+php artisan test
+```
+
+## Deploy (Produção)
+
+1. Configure MySQL no `.env`:
+   ```
+   DB_CONNECTION=mysql
+   DB_HOST=127.0.0.1
+   DB_PORT=3306
+   DB_DATABASE=caveiras_mc
+   DB_USERNAME=root
+   DB_PASSWORD=secret
+   ```
+
+2. Execute as migrations:
+   ```bash
+   php artisan migrate --force
+   ```
+
+3. Configure Redis para cache:
+   ```
+   CACHE_STORE=redis
+   QUEUE_CONNECTION=redis
+   ```
+
+4. Build dos assets:
+   ```bash
+   npm run build
+   ```
+
+5. Configure o Nginx conforme documentação do Laravel.
+
+## Licença
+
+MIT License - Caveira's MC Brasil
